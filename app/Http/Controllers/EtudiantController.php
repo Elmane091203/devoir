@@ -17,7 +17,9 @@ class EtudiantController extends Controller
     public function index()
     {
         $etudiants = Etudiant::all();
-        return view('classe', ['etudiants' => $etudiants]);
+        $matieres = Matiere::all();
+        $semestres = Semestre::all();
+        return view('classe', ['etudiants' => $etudiants,'matieres'=>$matieres,'semestres'=>$semestres]);
     }
 
     /**
@@ -43,12 +45,15 @@ class EtudiantController extends Controller
     {
         if (isset($request)) {
             $input = $request->all();
-            if ($input['nom'] == null || $input['prenom'] == null || $input['semestre'] == null || $input['matiere'] == null || $input['note1'] == null || $input['examen'] == null) {
-
-                $etudiants = Etudiant::all();
-                return view('classe', ['message' => "Erreur d'ajout", 'etudiants' => $etudiants]);
-            }
-            Etudiant::create($input);
+            $e = new Etudiant();
+            $e->nom = $input['nom'];
+            $e->prenom = $input['prenom'];
+            $e->semestre_id = $input['semestre'];
+            $e->matiere_id = $input['matiere'];
+            $e->note1 = intval($input['note1']);
+            $e->examen = intval($input['examen']);
+            $e->save();
+            // Etudiant::create($input);
             return redirect('/');
         }
     }
@@ -113,16 +118,19 @@ class EtudiantController extends Controller
                 $moyenne += ($e['examen'] + $e['note1']) / 2;
             }
         }
+        $moyenne = $moyenne / count($etudiants);
         return view('moyenne', ['moyenne' => $moyenne]);
     }
 
     public function premier()
     {
         $etudiants = Etudiant::all();
-        $e = $etudiants[0];
+        $e = new Etudiant();
+        if (count($etudiants) != 0)
+            $e = $etudiants[0];
         if ($etudiants != null) {
             foreach ($etudiants as $et) {
-                if (($e['note1'] + $e['moyenne']) / 2 < $et['note1'] + $et['moyenne'] / 2)
+                if (($e['note1'] + $e['moyenne']) / 2 < ($et['note1'] + $et['moyenne']) / 2)
                     $e = $et;
             }
         }

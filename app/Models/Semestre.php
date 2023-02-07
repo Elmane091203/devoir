@@ -11,6 +11,6 @@ class Semestre extends Model
     public $timestamps = false;
     public function etudiant()
     {
-        return $this->belongsTo(Etudiant::class);
+        return $this->hasMany(Etudiant::class);
     }
 }

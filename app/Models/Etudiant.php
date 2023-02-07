@@ -11,10 +11,10 @@ class Etudiant extends Model
     public $timestamps = false;
     public function matieres()
     {
-        return $this->hasMany(Matiere::class);
+        return $this->belongsTo(Matiere::class);
     }
     public function semestres()
     {
-        return $this->hasMany(Semestre::class);
+        return $this->belongsTo(Semestre::class);
     }
 }
