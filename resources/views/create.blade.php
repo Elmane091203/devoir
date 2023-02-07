@@ -6,7 +6,7 @@
         <div class="card-body text-center">
             <form action="{{route('etudiants.store')}}" class="align-middle" method="post">
                 @csrf
-                <div class="row mt-3">
+                <div class="row">
                     <label for="" class="col-md-4 h5 text-left pt-1">Prenom</label>
                     <input name="prenom" required type="text" class="form-control col-md-6">
                 </div>
@@ -40,7 +40,7 @@
                     <label for="" class="col-md-4 h5 text-left pt-1">Examen</label>
                     <input type="number" min="0" max="20" required name="examen" maxlength="2" class="form-control col-md-6">
                 </div>
-                <button type="submit" class="btn btn-success btn-lg">Enregistrer</button>
+                <button type="submit" class="btn btn-success btn-lg mt-2">Enregistrer</button>
             </form>
         </div>
     </div>
